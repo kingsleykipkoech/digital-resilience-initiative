@@ -1,11 +1,14 @@
-// Simple smooth scrolling for navigation
-document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+// Simple smooth scrolling for same-page hash links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+        const targetId = this.getAttribute('href');
+        // only intercept if target exists on this page
+        const el = document.querySelector(targetId);
+        if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: 'smooth' });
+        }
+        // otherwise allow normal navigation (external or other page)
     });
 });
 
